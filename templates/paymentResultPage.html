@@ -1,0 +1,60 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Procssing Result</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+  <script src="https://js.braintreegateway.com/web/dropin/1.25.0/js/dropin.min.js"></script>
+</head>
+<body class="grey lighten-3">
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container wow fadeIn">
+		<div class="row">
+			<!--Grid column-->
+			<div class="col-md-12 mb-4">
+				<!--Card-->
+				<div class="card">
+					<!--Card content-->
+					<div class="card-body text-center">
+						{% if isSuccess %}
+						<i class="fas fa-check fa-3x green-text "></i>
+						  <section>
+							<h4 class="text-center">Payment Successful</h4>
+							<p class="text-center">OrderId : {{orderId}}</p>
+							<!-- TODO: it should also provide some useful transaction details. --> 
+						  </section>
+						{% else %}
+						<i class="fas fa-times-circle fa-3x red-text"></i>
+						  <section>
+							<h4 class="text-center">Error processing Transaction</h4>
+							<p class="text-center">OrderId : {{orderId}}</p>
+						  </section>
+						{% endif %}
+						<a class="btn btn-primary" href="/" role="button">Back To Checkout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+  </main>
+  <!--Main layout-->
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+</body>
+
+</html>

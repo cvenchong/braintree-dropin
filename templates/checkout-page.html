@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Braintree Drop-in UI Sample</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+  <script src="https://js.braintreegateway.com/web/dropin/1.25.0/js/dropin.min.js"></script>
+</head>
+
+<body class="grey lighten-3">
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container wow fadeIn">
+
+      <!-- Heading -->
+      <h2 class="my-5 h2 text-center">Braintree Drop-in UI Sample</h2>
+	  <h3 class="my-5 h2 text-center">UserProfile: {{customerId}}</h2>
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <form class="card-body">
+
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-2">
+
+                  <!--firstName-->
+                  <div class="md-form ">
+                    <input type="text" id="firstName" class="form-control">
+                    <label for="firstName" class="">First name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-6 mb-2">
+
+                  <!--lastName-->
+                  <div class="md-form">
+                    <input type="text" id="lastName" class="form-control">
+                    <label for="lastName" class="">Last name</label>
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+              <!--email-->
+              <div class="md-form mb-5">
+                <input type="text" id="email" class="form-control" placeholder="youremail@example.com">
+                <label for="email" class="">Email (optional)</label>
+              </div>
+
+              <!--address-->
+              <div class="md-form mb-5">
+                <input type="text" id="address" class="form-control" placeholder="1234 Main St">
+                <label for="address" class="">Address</label>
+              </div>
+
+              <!--address-2-->
+              <div class="md-form mb-5">
+                <input type="text" id="address-2" class="form-control" placeholder="Apartment or suite">
+                <label for="address-2" class="">Address 2 (optional)</label>
+              </div>
+
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-12 mb-6">
+
+                  <label for="country">Country</label>
+                  <select class="custom-select d-block w-100" id="country" required>
+                    <option value="">Choose...</option>
+                    <option>United States</option>
+					<option>Singapore</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid country.
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-lg-6 col-md-6 mb-6">
+
+                  <label for="zip">Zip</label>
+                  <input type="text" class="form-control" id="zip" placeholder="" required>
+                  <div class="invalid-feedback">
+                    Zip code required.
+                  </div>
+
+                </div>
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+              <hr class="mb-4">
+              
+            </form>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+          
+		  <section>
+			  <!-- Heading -->
+			  <h4 class="d-flex justify-content-between align-items-center mb-3">
+				<span class="text-muted">Your cart</span>
+				<span class="badge badge-secondary badge-pill">3</span>
+			  </h4>
+
+			  <!-- Cart -->
+			  <ul class="list-group mb-3 z-depth-1">
+				<li class="list-group-item d-flex justify-content-between lh-condensed">
+				  <div>
+					<h6 class="my-0">Product name</h6>
+					<small class="text-muted">Brief description</small>
+				  </div>
+				  <span class="text-muted">$12</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between lh-condensed">
+				  <div>
+					<h6 class="my-0">Second product</h6>
+					<small class="text-muted">Brief description</small>
+				  </div>
+				  <span class="text-muted">$8</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between lh-condensed">
+				  <div>
+					<h6 class="my-0">Third item</h6>
+					<small class="text-muted">Brief description</small>
+				  </div>
+				  <span class="text-muted">$5</span>
+				</li>
+				<li class="list-group-item d-flex justify-content-between">
+				  <span>Total (USD)</span>
+				  <strong>$28</strong>
+				</li>
+			  </ul>
+			  <!-- Cart -->
+		  </section>
+          
+		  <section>
+			  <!-- Heading -->
+			  <h4 class="d-flex justify-content-between align-items-center mb-3">
+				<span class="text-muted">Test Cards</span>
+			  </h4>
+			  <ul class="list-group mb-3 z-depth-1">
+			  <li class="list-group-item d-flex justify-content-between">
+				  <span>test card</span>
+				  <strong>4111111111111111</strong>
+				</li>
+				<li class="list-group-item d-flex justify-content-between">
+				  <span>test card - unsuccessful verification</span>
+				  <strong>5105105105105100</strong>
+				</li>
+			  </ul>
+		  </section>
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+      <!--Grid row-->
+      <div class="row">
+		<!--Grid column-->
+        <div class="col-md-12 mb-4">
+			<form id="payment-form" action="/checkout" method="post">
+				<!-- Putting the empty container you plan to pass to
+				`braintree.dropin.create` inside a form will make layout and flow
+				easier to manage -->
+				<div id="dropin-container"></div>
+				<input class="btn btn-primary btn-lg btn-block" id="submit-button" type="submit" value="Pay"></button>
+				<input type="hidden" id="nonce" name="payment_method_nonce"/>
+				<input type="hidden" id="cId" name="cust_id"/>
+				<input type="hidden" id="amt" name="amount"/>
+			</form>
+		</div>
+		<!--Grid column-->
+	  </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+	<script>
+	    const form = document.getElementById('payment-form');
+		const custId = '{{customerId}}'
+		document.getElementById('cId').value = custId
+		document.getElementById('amt').value = 28.00
+		
+		braintree.dropin.create({
+		  authorization: '{{clientToken}}',
+		  container: '#dropin-container',
+		  vaultManager: true
+		}).then((dropinInstance) => {
+		  form.addEventListener('submit', (event) => {
+			event.preventDefault();
+
+			dropinInstance.requestPaymentMethod().then((payload) => {
+			  // Step four: when the user is ready to complete their
+			  //   transaction, use the dropinInstance to get a payment
+			  //   method nonce for the user's selected payment method, then add
+			  //   it a the hidden field before submitting the complete form to
+			  //   a server-side integration
+			  document.getElementById('nonce').value = payload.nonce;
+			  //for understanding of payload object 
+			  console.log(JSON.stringify(payload, null, 2));			  
+			  form.submit();
+			}).catch((error) => { throw error; });
+		  });
+		}).catch((error) => {
+		  // handle errors	
+		});
+	</script>
+</body>
+
+</html>
