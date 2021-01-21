@@ -29,23 +29,26 @@ TRANSACTION_SUCCESS_STATUSES = [
 ]
 
 #for quick testing purpose, hardcoded customer id
-customerId = "clk"
+customerId = "cvenchong"
 
 @app.route("/", methods=["GET"])
 def index():
-#for quick testing purpose, hardcoded customer id
+#for quick testing purpose, hardcoded customer id. Check function setCurrentActiveUser to see how to use API to change this
     clientToken = getClientToken(customerId)
     return render_template("checkout-page.html", clientToken=clientToken, customerId=customerId)
 
 def getClientToken(customerId):
     isExistingCustomer = findCustomer(customerId)
-    if(isExistingCustomer):
-        clientToken = gateway.client_token.generate({
-            "customer_id": customerId
-        })
-    else:
-        clientToken = gateway.client_token.generate({})
-    print("Client token created for existing customer: " + str(isExistingCustomer))
+    if(not isExistingCustomer):
+        customerId = createCustomerAccount(customerId)
+    
+    clientToken = gateway.client_token.generate({
+		"customer_id": customerId,
+		"options": {
+			"verify_card": False
+		}
+    })
+    print("Client token created: ")
     print(clientToken)
     return clientToken
 
@@ -59,6 +62,29 @@ def findCustomer(customerId):
         print("  customer id {} NOT found!".format(customerId))
         return False
 
+def createCustomerAccount(cid):
+    global customerId
+    print("creating new customer: ")
+    randomSuffix = str(uuid.uuid4())[:8]
+    result = gateway.customer.create({
+        "first_name": cid + randomSuffix,
+        "last_name": cid + randomSuffix,
+        "company": "Braintree",
+        "email": "jen@example.com",
+        "phone": "312.555.1234",
+        "fax": "614.555.5678",
+        "website": "www.example.com",
+        "id": cid
+    })
+    if result.is_success: 
+        print("  customer id {} created!".format(result.customer.id))
+        customerId = result.customer.id
+        print("  global customer id changed to {}".format(result.customer.id))
+        return result.customer.id
+    else:
+    #TODO: when have time, try to see how to properly handle. Now just assume always successful
+        print("  customer id {} NOT created!".format(cid))
+        raise Exception('User creation failed. Unknown error. cid {}, suffix {}'.format(cid, randomSuffix))
 
 @app.route("/checkout", methods=["POST"])
 def createPayment():
@@ -72,7 +98,6 @@ def createTransaction(nonce_from_the_client, customerId, amount):
     isExistingCustomer = findCustomer(customerId)
     tranReq = formulateTransactionRequest(isExistingCustomer, customerId, nonce_from_the_client, amount)
     orderId = tranReq["order_id"]
-    # implement in such a way that always store card info in vault for customer (new and returning)
     result = gateway.transaction.sale(tranReq)
     if result.is_success:
         print("Transaction is processed successfully:")
@@ -100,12 +125,12 @@ def formulateTransactionRequest(isExistingCustomer, customerId, nonce_from_the_c
 #        },
         "options": {
             "submit_for_settlement": True,
-		    "store_in_vault_on_success": True
+#		    "store_in_vault_on_success": False
         }
     }
-    if(not isExistingCustomer):
-        cusOb = {"id": customerId}
-        baseOb["customer"] = cusOb
+#    if(not isExistingCustomer): #this is no longer needed
+#        cusOb = {"id": customerId}
+#        baseOb["customer"] = cusOb
     print ("Transaction request obj: ")
     print (baseOb)
     return baseOb
@@ -113,6 +138,7 @@ def formulateTransactionRequest(isExistingCustomer, customerId, nonce_from_the_c
 @app.route("/checkouts/<transaction_id>", methods=["GET"])
 def showSuccessfulTransaction(transaction_id):
     transaction = gateway.transaction.find(transaction_id) 
+    print (transaction)
     return render_template("paymentResultPage.html", transaction=transaction, isSuccess=True, orderId=transaction.order_id)
 
 @app.route("/error/<orderId>", methods=["GET"])
@@ -120,9 +146,29 @@ def errorProcessingPage(orderId):
     return render_template("paymentResultPage.html", orderId=orderId, isSuccess=False)
 
 
+#standalone card verification. - not needed anymore
+#def verifyCard(customerId,nonce_from_the_client):
+#    print ("verifying card")
+#    result = gateway.payment_method.create({
+#        "customer_id": customerId,
+#        "payment_method_nonce": nonce_from_the_client,
+#        "options": {
+#            "verify_card": True
+#        }
+#    })
+#    print(result)
+#    if result.is_success:
+#        verification = result.payment_method.verification
+#    else: 
+#        for error in result.errors.deep_errors:
+#            print(error.code)
+#            print(error.message)    
+#    return result
+
+
 @app.route("/user/current", methods=["PUT"])
 def setCurrentActiveUser():
-#for quick demo purposes, exposing API to update active customer id 
+#for quick demo purposes, exposing API to set active customer id 
     global customerId
     jsonReq = request.get_json()
     customerId = jsonReq['username']
